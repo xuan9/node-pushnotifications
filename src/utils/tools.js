@@ -1,6 +1,6 @@
 const R = require('ramda');
 const { Notification: ApnsMessage } = require('@parse/node-apn');
-const { Message: GcmMessage } = require('node-gcm');
+const GcmMessage = require('../node-gcm/message');
 
 const { DEFAULT_TTL, GCM_MAX_TTL } = require('../constants');
 
@@ -122,7 +122,7 @@ const buildGcmMessage = (data, options) => {
     custom['content-available'] = 1;
   }
 
-  const message = new GcmMessage({
+  const message = GcmMessage({
     collapseKey: data.collapseKey,
     priority: data.priority === 'normal' ? 'normal' : 'high',
     contentAvailable: data.silent ? true : data.contentAvailable || false,

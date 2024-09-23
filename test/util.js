@@ -1,5 +1,4 @@
 import sinon from 'sinon';
-import gcm from 'node-gcm';
 import { expect } from 'chai';
 
 export const testPushSuccess = (method, regIds) => (err, results, done) => {

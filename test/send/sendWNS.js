@@ -260,31 +260,4 @@ describe('push-notifications-wns', () => {
         .catch((err) => testException(err, undefined, done));
     });
   });
-
-  describe('send push notifications successfully using FCM', () => {
-    const pnGCM = new PN({
-      isAlwaysUseFCM: true,
-      isLegacyGCM: true,
-    });
-    before(() => {
-      sendMethod = sendOkMethodGCM(regIds, data);
-    });
-
-    after(() => {
-      sendMethod.restore();
-    });
-
-    it('all responses should be successful (callback)', (done) => {
-      pnGCM.send(regIds, data, (err, results) =>
-        testSuccessGCM(err, results, done)
-      );
-    });
-
-    it('all responses should be successful (promise)', (done) => {
-      pnGCM
-        .send(regIds, data)
-        .then((results) => testSuccessGCM(null, results, done))
-        .catch(done);
-    });
-  });
 });

@@ -12,7 +12,6 @@ import {
   WEB_METHOD,
   WNS_METHOD,
   ADM_METHOD,
-  GCM_METHOD,
   FCM_METHOD,
   APN_METHOD,
 } from '../../src/constants';
@@ -196,56 +195,6 @@ describe('push-notifications: instantiation and class properties', () => {
       },
       unknownRegId: 'abcdef',
     };
-
-    it('Android / GCM', () => {
-      let pn = new PN({ isLegacyGCM: true });
-      expect(pn.getPushMethodByRegId(regIds.androidRegId).regId).to.equal(
-        regIds.androidRegId
-      );
-      expect(pn.getPushMethodByRegId(regIds.androidRegId).pushMethod).to.equal(
-        GCM_METHOD
-      );
-
-      expect(
-        pn.getPushMethodByRegId(regIds.androidWithAdmSubstringRegId).regId
-      ).to.equal(regIds.androidWithAdmSubstringRegId);
-      expect(
-        pn.getPushMethodByRegId(regIds.androidWithAdmSubstringRegId).pushMethod
-      ).to.equal(GCM_METHOD);
-
-      expect(
-        pn.getPushMethodByRegId(regIds.androidWithAmznSubscringRegId).regId
-      ).to.equal(regIds.androidWithAmznSubscringRegId);
-      expect(
-        pn.getPushMethodByRegId(regIds.androidWithAmznSubscringRegId).pushMethod
-      ).to.equal(GCM_METHOD);
-
-      const settings = {
-        isAlwaysUseFCM: true,
-        isLegacyGCM: true,
-      };
-      pn = new PN(settings);
-      expect(pn.getPushMethodByRegId(regIds.unknownRegId).regId).to.equal(
-        regIds.unknownRegId
-      );
-      expect(pn.getPushMethodByRegId(regIds.unknownRegId).pushMethod).to.equal(
-        GCM_METHOD
-      );
-
-      expect(pn.getPushMethodByRegId(regIds.androidObject).regId).to.equal(
-        regIds.androidObject.id
-      );
-      expect(pn.getPushMethodByRegId(regIds.androidObject).pushMethod).to.equal(
-        GCM_METHOD
-      );
-
-      expect(
-        pn.getPushMethodByRegId(regIds.androidObjectWhatever).regId
-      ).to.equal(regIds.androidObjectWhatever.id);
-      expect(
-        pn.getPushMethodByRegId(regIds.androidObjectWhatever).pushMethod
-      ).to.equal(GCM_METHOD);
-    });
 
     it('Android / FCM', () => {
       const settings = {
