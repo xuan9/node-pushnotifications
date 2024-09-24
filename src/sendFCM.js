@@ -1,4 +1,5 @@
 const firebaseAdmin = require('firebase-admin');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 
 const { FCM_METHOD } = require('./constants');
 const FcmMessage = require('./utils/fcmMessage');
@@ -81,6 +82,10 @@ const sendFCM = (regIds, data, settings) => {
       settings.fcm.credential ||
       firebaseAdmin.credential.cert(settings.fcm.serviceAccountKey),
   };
+
+  if (settings.HTTPS_PROXY) {
+    opts.httpAgent = new HttpsProxyAgent(settings.HTTPS_PROXY);
+  }
 
   const firebaseApp = firebaseAdmin.initializeApp(opts, appName);
   firebaseAdmin.INTERNAL.appStore.removeApp(appName);
