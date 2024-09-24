@@ -78,10 +78,7 @@ const sendChunk = (firebaseApp, recipients, message) => {
 const sendFCM = (regIds, data, settings) => {
   const appName = `${settings.fcm.appName}`;
 
-  const httpsProxyAgent = undefined;
-  if (settings.HTTPS_PROXY) {
-    httpsProxyAgent = new HttpsProxyAgent(settings.HTTPS_PROXY);
-  }
+  let httpsProxyAgent = settings.HTTPS_PROXY ? new HttpsProxyAgent(settings.HTTPS_PROXY) : undefined;
 
   const opts = {
     credential:
