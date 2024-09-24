@@ -77,15 +77,21 @@ const sendChunk = (firebaseApp, recipients, message) => {
 
 const sendFCM = (regIds, data, settings) => {
   const appName = `${settings.fcm.appName}`;
+
+  const httpsProxyAgent = undefined;
+  if (settings.HTTPS_PROXY) {
+    httpsProxyAgent = new HttpsProxyAgent(settings.HTTPS_PROXY);
+  }
+
   const opts = {
     credential:
       settings.fcm.credential ||
-      firebaseAdmin.credential.cert(settings.fcm.serviceAccountKey),
+      firebaseAdmin.credential.cert(
+        settings.fcm.serviceAccountKey,
+        httpsProxyAgent
+      ),
+    httpAgent: httpsProxyAgent,
   };
-
-  if (settings.HTTPS_PROXY) {
-    opts.httpAgent = new HttpsProxyAgent(settings.HTTPS_PROXY);
-  }
 
   const firebaseApp = firebaseAdmin.initializeApp(opts, appName);
   firebaseAdmin.INTERNAL.appStore.removeApp(appName);
